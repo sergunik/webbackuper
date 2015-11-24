@@ -1,6 +1,6 @@
 <?php
 
-namespace webbackuper\base;
+namespace Webbackuper\service;
 
 /**
  * @method static Route get(string $route, Callable $callback)
@@ -12,28 +12,29 @@ namespace webbackuper\base;
  */
 class Route
 {
-    public static $halts = false;
     public static $routes = array();
     public static $methods = array();
     public static $callbacks = array();
     public static $patterns = array(
         ':any' => '[^/]+',
         ':num' => '[0-9]+',
+        ':alpha' => '[a-z]+',
         ':all' => '.*'
     );
     public static $error_callback;
+
     /**
      * Defines a route w/ callback and method
      */
     public static function __callstatic($method, $params)
     {
-
         $uri = dirname($_SERVER['PHP_SELF']).$params[0];
         $callback = $params[1];
         array_push(self::$routes, $uri);
         array_push(self::$methods, strtoupper($method));
         array_push(self::$callbacks, $callback);
     }
+
     /**
      * Defines callback if route is not found
      */
@@ -42,10 +43,6 @@ class Route
         self::$error_callback = $callback;
     }
 
-    public static function haltOnMatch($flag = true)
-    {
-        self::$halts = $flag;
-    }
     /**
      * Runs the callback for the given request
      */
@@ -76,14 +73,9 @@ class Route
                         $controller = new $segments[0]();
                         //call method
                         $controller->$segments[1]();
-
-                        if (self::$halts) return;
-
                     } else {
                         //call closure
                         call_user_func(self::$callbacks[$route]);
-
-                        if (self::$halts) return;
                     }
                 }
             }
@@ -115,14 +107,9 @@ class Route
                             }
                             //call method and pass any extra parameters to the method
                             // $controller->$segments[1](implode(",", $matched));
-
-                            if (self::$halts) return;
                         } else {
                             call_user_func_array(self::$callbacks[$pos], $matched);
-
-                            if (self::$halts) return;
                         }
-
                     }
                 }
                 $pos++;
@@ -139,5 +126,10 @@ class Route
             }
             call_user_func(self::$error_callback);
         }
+    }
+
+    public static function redirect($url) {
+        header('Location: '.$url);
+        exit;
     }
 }

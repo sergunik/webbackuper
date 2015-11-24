@@ -1,5 +1,5 @@
 {
-    "name": "webbackuper/webbackuper",
+    "name": "Webbackuper/Webbackuper",
     "description": "Web service for making backups from different environments.",
     "keywords": ["backup", "web interface", "PSR-4"],
     "type": "project",

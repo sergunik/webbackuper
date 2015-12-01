@@ -10,7 +10,7 @@ namespace Webbackuper\service;
  * @method static Route options(string $route, Callable $callback)
  * @method static Route head(string $route, Callable $callback)
  */
-class Route
+class Router
 {
     public static $routes = array();
     public static $methods = array();

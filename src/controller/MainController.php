@@ -3,19 +3,20 @@ namespace Webbackuper\controller;
 
 use Webbackuper\entity\Job;
 use Webbackuper\service\Request;
-use Webbackuper\service\Route;
+use Webbackuper\service\Router;
 use Webbackuper\service\Storage;
+use Webbackuper\service\Viewer;
 
 class MainController
 {
     public function indexAction()
     {
-        require DIR_VIEW . 'main.php';
+        Viewer::render('Main:index');
     }
 
     public function addJobAction()
     {
-        require DIR_VIEW . 'addJob.php';
+        Viewer::render('Main:addJob');
     }
 
     public function listJobAction()
@@ -23,7 +24,7 @@ class MainController
         $Storage = new Storage();
         $jobs = $Storage->getJobList();
 
-        require DIR_VIEW . 'listJob.php';
+        Viewer::render('Main:listJob', array('jobs'=>$jobs));
     }
 
     public function saveJobAction()
@@ -35,6 +36,6 @@ class MainController
         $Request->processing($Job);
         $Storage->saveEntity($Job);
 
-        Route::redirect('/list_job');
+        Router::redirect('/list_job');
     }
 }

@@ -2,6 +2,7 @@
 namespace Webbackuper\controller;
 
 use Webbackuper\entity\Job;
+use Webbackuper\service\Generator;
 use Webbackuper\service\Request;
 use Webbackuper\service\Router;
 use Webbackuper\service\Storage;
@@ -32,9 +33,11 @@ class MainController
         $Job = new Job();
         $Request = new Request();
         $Storage = new Storage();
+        $Generator = new Generator();
 
         $Request->processing($Job);
         $Storage->saveEntity($Job);
+        $Generator->generate($Job);
 
         Router::redirect('/list_job');
     }

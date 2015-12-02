@@ -2,7 +2,7 @@
         <h1>Add job</h1>
 
         <form action="/save_job" method="post">
-            <input type="text" name="title" value="<?php \Webbackuper\service\Generator::defaultJobTitle() ?>" />
+            <input type="text" name="title" value="<?php echo date("YmdHis") ?>" />
 
             <article>
                 <h2>Before</h2>

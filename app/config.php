@@ -5,6 +5,7 @@ define('PROJECT_NAME', 'WebBackUper');
 
 //DIRECTORIES
 define('DIR_CONFIG', __DIR__ . '/../config/');
+define('DIR_SHELL', __DIR__ . '/../sh/');
 define('DIR_VIEW', __DIR__ . '/../src/view/');
 
 define('DIR_WEB', __DIR__ . '/../web/');

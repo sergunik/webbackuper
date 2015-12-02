@@ -1,9 +1,7 @@
 <?php
 namespace Webbackuper\entity;
 
-use Webbackuper\entity\EntityInterface;
-
-class Job implements EntityInterface
+class Job
 {
     public $title;
     public $before_host;

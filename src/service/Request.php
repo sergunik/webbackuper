@@ -1,7 +1,7 @@
 <?php
 namespace Webbackuper\service;
 
-use Webbackuper\entity\EntityInterface;
+use Webbackuper\entity\Job;
 
 class Request
 {
@@ -14,7 +14,7 @@ class Request
         $this->_post = $_POST;
     }
 
-    public function processing(EntityInterface &$Entity) {
+    public function processing(Job &$Entity) {
         foreach( get_object_vars($Entity) as $field=>$null ) {
             if( !isset($this->_post[$field]) ) {
                 throw new \Exception('Field "'.$field.'" not found.');

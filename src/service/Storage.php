@@ -1,13 +1,13 @@
 <?php
 namespace Webbackuper\service;
 
-use Webbackuper\entity\EntityInterface;
+use Webbackuper\entity\Job;
 
 class Storage
 {
     const EXTENSION = 'json';
 
-    public function saveEntity(EntityInterface $Entity, $id = null) {
+    public function saveEntity(Job $Entity, $id = null) {
         $data = get_object_vars($Entity);
 
         return $this->saveJob($data, $id);

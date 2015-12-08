@@ -2,34 +2,53 @@
 namespace Webbackuper\service;
 
 use Webbackuper\entity\Job;
+use Webbackuper\service\HostStorage;
 
 class Generator
 {
     const EXTENSION = 'sh';
+    const PATTERN_COMMAND = "#RUN COMMANDS
+ssh %user%@%host% '
+%command%
+'";
 
     /**
      * @var Job
      */
     private $job;
 
+    /**
+     * @var HostStorage
+     */
+    private $hostStorage;
+
+    function __construct(HostStorage $hostStorage)
+    {
+        $this->hostStorage = $hostStorage;
+    }
+
     public function generate(Job $job) {
         $this->job = $job;
 
         $script = [];
+        $script[] = $this->generateShebang();
         $script[] = $this->generateCommand($this->job->before_host, $this->job->before_commands);
-        $script[] = PHP_EOL; //generate rsync command
+//        $script[] = PHP_EOL; //generate rsync command
         $script[] = $this->generateCommand($this->job->after_host, $this->job->after_commands);
 
-        $this->store( implode( PHP_EOL, $script ) );
+        $this->store( implode( PHP_EOL.PHP_EOL, $script ) );
     }
 
-    private function generateCommand($host, $command) {
-$pattern = "#RUN COMMANDS
-ssh %host% '
-%command%
-'";
+    private function generateShebang() {
+        return '#!/usr/bin/env sh';
+    }
 
-        $pattern = str_replace('%host%', $host, $pattern);
+    private function generateCommand($host_id, $command) {
+        $Host = $this->hostStorage->getHost($host_id);
+
+        $pattern = self::PATTERN_COMMAND;
+        $pattern = str_replace('%user%', $Host->user, $pattern);
+        $pattern = str_replace('%host%', $Host->host, $pattern);
         $pattern = str_replace('%command%', $command, $pattern);
 
         return $pattern;

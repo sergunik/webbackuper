@@ -10,10 +10,12 @@
     include DIR_JS . $script . '.js';
 });
 
-\Webbackuper\service\Router::get('/add_job', '\Webbackuper\controller\MainController@addJobAction');
-\Webbackuper\service\Router::get('/list_job', '\Webbackuper\controller\MainController@listJobAction');
+\Webbackuper\service\Router::get('/job_add', '\Webbackuper\controller\MainController@addJobAction');
+\Webbackuper\service\Router::get('/job_list', '\Webbackuper\controller\MainController@listJobAction');
+\Webbackuper\service\Router::post('/job_save', '\Webbackuper\controller\MainController@saveJobAction');
 
-\Webbackuper\service\Router::post('/save_job', '\Webbackuper\controller\MainController@saveJobAction');
+\Webbackuper\service\Router::get('/host', '\Webbackuper\controller\HostController@indexAction');
+\Webbackuper\service\Router::post('/host_save', '\Webbackuper\controller\HostController@saveAction');
 
 
 \Webbackuper\service\Router::dispatch();

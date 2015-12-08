@@ -1,7 +1,7 @@
     <section>
         <h1>Add job</h1>
 
-        <form action="/save_job" method="post">
+        <form action="/job_save" method="post">
             <input type="text" name="title" value="<?php echo date("YmdHis") ?>" />
 
             <article>
@@ -12,8 +12,14 @@
 
                     <label>Host</label>
                     <select name="before_host">
-                        <option value="root@localhost">root@localhost</option>
-                        <option value="0">/add</option>
+                        <?php
+                        foreach ($hostList as $host) {
+                        ?>
+                        <option value="<?php print($host) ?>"><?php print($host) ?></option>
+                        <?php
+                        }
+                        ?>
+                        <option value="0">add via js</option>
                     </select>
 
                     <label>Commands</label>
@@ -26,16 +32,28 @@
 
                 <h3>From</h3>
                 <select name="from_host">
-                    <option value="root@localhost">root@localhost</option>
-                    <option value="0">/add</option>
+                    <?php
+                    foreach ($hostList as $host) {
+                        ?>
+                        <option value="<?php print($host) ?>"><?php print($host) ?></option>
+                        <?php
+                    }
+                    ?>
+                    <option value="0">add via js</option>
                 </select>
                 :
                 <input type="text" name="from_path" value="/home/serg/1.txt" />
 
                 <h3>To</h3>
                 <select name="to_host">
-                    <option value="root@localhost">root@localhost</option>
-                    <option value="0">/add</option>
+                    <?php
+                    foreach ($hostList as $host) {
+                        ?>
+                        <option value="<?php print($host) ?>"><?php print($host) ?></option>
+                        <?php
+                    }
+                    ?>
+                    <option value="0">add via js</option>
                 </select>
                 :
                 <input type="text" name="to_path" value="/var/logs/1.txt" />
@@ -53,8 +71,14 @@
 
                     <label>Host</label>
                     <select name="after_host">
-                        <option value="0">/add</option>
-                        <option value="root@localhost">root@localhost</option>
+                        <?php
+                        foreach ($hostList as $host) {
+                            ?>
+                            <option value="<?php print($host) ?>"><?php print($host) ?></option>
+                            <?php
+                        }
+                        ?>
+                        <option value="0">add via js</option>
                     </select>
 
                     <label>Commands</label>

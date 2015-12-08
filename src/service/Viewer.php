@@ -19,6 +19,19 @@ class Viewer {
         print ob_get_clean();
     }
 
+    public static function renderAjax($template, $param = array()) {
+        $template_path = self::parseTemplateName($template);
+        self::validateTemplatePath($template_path);
+
+        extract($param, EXTR_SKIP);
+
+        ob_start();
+
+        require_once $template_path;
+
+        print ob_get_clean();
+    }
+
     private static function parseTemplateName($template) {
         if ( false === strpos($template, self::DELIMITER) ) {
             throw new \Exception('Wrong name of template "'.$template.'".');

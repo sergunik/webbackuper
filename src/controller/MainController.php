@@ -3,9 +3,10 @@ namespace Webbackuper\controller;
 
 use Webbackuper\entity\Job;
 use Webbackuper\service\Generator;
+use Webbackuper\service\HostStorage;
 use Webbackuper\service\Request;
 use Webbackuper\service\Router;
-use Webbackuper\service\Storage;
+use Webbackuper\service\JobStorage;
 use Webbackuper\service\Viewer;
 
 class MainController
@@ -17,13 +18,15 @@ class MainController
 
     public function addJobAction()
     {
-        Viewer::render('Main:addJob');
+        $HostStorage = new HostStorage();
+        $hostList = $HostStorage->getList();
+        Viewer::render('Main:addJob', array('hostList'=>$hostList));
     }
 
     public function listJobAction()
     {
-        $Storage = new Storage();
-        $jobs = $Storage->getJobList();
+        $JobStorage = new JobStorage();
+        $jobs = $JobStorage->getList();
 
         Viewer::render('Main:listJob', array('jobs'=>$jobs));
     }
@@ -32,13 +35,14 @@ class MainController
     {
         $Job = new Job();
         $Request = new Request();
-        $Storage = new Storage();
-        $Generator = new Generator();
+        $JobStorage = new JobStorage();
+        $HostStorage = new HostStorage();
+        $Generator = new Generator($HostStorage);
 
         $Request->processing($Job);
-        $Storage->saveEntity($Job);
+        $JobStorage->saveJob($Job);
         $Generator->generate($Job);
 
-        Router::redirect('/list_job');
+        Router::redirect('/job_list');
     }
 }

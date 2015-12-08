@@ -1,7 +1,7 @@
 <?php
 namespace Webbackuper\entity;
 
-class Job
+class Job extends AbstractEntity
 {
     public $title;
     public $before_host;
@@ -12,14 +12,4 @@ class Job
     public $to_path;
     public $after_host;
     public $after_commands;
-
-    public function __construct($data = null) {
-        if(is_null($data) || !is_array($data)) return;
-
-        foreach( $data as $key => $val ) {
-            if(property_exists(__CLASS__, $key)) {
-                $this->$key = $val;
-            }
-        }
-    }
 }

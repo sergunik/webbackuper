@@ -9,11 +9,15 @@ abstract class AbstractStorage
 
     abstract protected function _getFilePath ();
 
-    protected function _getFileName ($id) {
+    private function _getFileName ($id) {
         return $this->_getFilePath() . $id . '.' . self::EXTENSION;
     }
 
-    protected function _store($file, $data) {
+    private function _store($file, $data) {
+        if(!is_dir(dirname($file))) {
+            mkdir(dirname($file), 0777, true);
+        }
+
         $result = (bool)file_put_contents( $file, $data );
 
         if(!$result) {
@@ -25,16 +29,16 @@ abstract class AbstractStorage
         return true;
     }
 
-    protected function _saveEntity(AbstractEntity $entity) {
+    public function save(AbstractEntity $entity) {
         $data = get_object_vars($entity);
         $data = json_encode($data);
 
-        return self::_store( $this->_getFileName( $entity->title ), $data );
+        return self::_store( $this->_getFileName( $entity->id ), $data );
     }
 
-    protected function _getEntity($id) {
+    public function getData($id) {
+        //TODO: validation
         if( !file_exists( $this->_getFileName($id) ) ) {
-            //todo: create my own Exception and handle it
             throw new \Exception('File "' . $this->_getFileName($id) . '" does not exist.');
         }
 
@@ -48,11 +52,26 @@ abstract class AbstractStorage
 
         foreach (new \DirectoryIterator($this->_getFilePath()) as $file) {
             if ( $file->isFile() && self::EXTENSION == $file->getExtension() ) {
-                $return[] = $file->getBasename('.'.self::EXTENSION);
+                $filename = $file->getBasename('.'.self::EXTENSION);
+                $content = $this->getData($filename);
+
+                $return[$filename] = $content;
             }
         }
 
         return $return;
+    }
+
+    public function getListObjects($entityName)
+    {
+        $list = $this->getList();
+        ksort($list);
+
+        foreach($list as $key => $value) {
+            $list[$key] = new $entityName($value);
+        }
+
+        return $list;
     }
 
 }

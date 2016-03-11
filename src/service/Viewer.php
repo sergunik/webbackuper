@@ -34,7 +34,7 @@ class Viewer {
 
     private static function parseTemplateName($template) {
         if ( false === strpos($template, self::DELIMITER) ) {
-            throw new \Exception('Wrong name of template "'.$template.'".');
+            return DIR_TASK . $template . '/view.php';
         }
 
         list($controller, $action) = explode(':', $template);

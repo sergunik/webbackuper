@@ -1,0 +1,7 @@
+/vendor
+
+# PHP Storm files
+.idea
+
+#Mac files
+.DS_Store

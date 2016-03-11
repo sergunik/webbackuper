@@ -3,7 +3,7 @@ namespace webbackuper\entity;
 
 abstract class AbstractEntity
 {
-    public $title;
+    public $id = null;
 
     /**
      * @param null $data

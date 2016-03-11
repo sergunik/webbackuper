@@ -9,12 +9,8 @@ class JobStorage extends AbstractStorage
         return DIR_CONFIG_JOBS;
     }
 
-    public function saveJob(Job $Job) {
-        return self::_saveEntity($Job);
-    }
-
-    public function getJob($id) {
-        $data = self::_getEntity($id);
+    public function get($id) {
+        $data = self::getData($id);
         return new Job($data);
     }
 }

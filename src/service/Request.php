@@ -16,18 +16,9 @@ class Request
 
     public function processing(AbstractEntity &$Entity) {
         foreach( get_object_vars($Entity) as $field=>$null ) {
-            if( !isset($this->_post[$field]) ) {
-                throw new \Exception('Field "'.$field.'" not found.');
+            if( isset($this->_post[$field]) ) {
+                $Entity->$field = trim($this->_post[$field]);
             }
-
-            $value = trim($this->_post[$field]);
-
-            if( '' == $value ) {
-                throw new \Exception('Field "'.$field.'" is empty.');
-            }
-
-            $Entity->$field = $value;
         }
-
     }
 }

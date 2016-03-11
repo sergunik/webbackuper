@@ -2,8 +2,6 @@
 namespace Webbackuper\controller;
 
 use Webbackuper\entity\Job;
-use Webbackuper\service\Generator;
-use Webbackuper\service\HostStorage;
 use Webbackuper\service\Request;
 use Webbackuper\service\Router;
 use Webbackuper\service\JobStorage;
@@ -16,33 +14,36 @@ class MainController
         Viewer::render('Main:index');
     }
 
-    public function addJobAction()
+    public function createAction()
     {
-        $HostStorage = new HostStorage();
-        $hostList = $HostStorage->getList();
-        Viewer::render('Main:addJob', array('hostList'=>$hostList));
+        Viewer::render('Main:jobCreate');
     }
 
-    public function listJobAction()
+    public function listAction()
     {
         $JobStorage = new JobStorage();
-        $jobs = $JobStorage->getList();
+        $jobs = $JobStorage->getListObjects(); //todo: need name of entity
 
-        Viewer::render('Main:listJob', array('jobs'=>$jobs));
+        Viewer::render('Main:jobList', array('jobs'=>$jobs));
     }
 
-    public function saveJobAction()
+    public function getAction($id)
+    {
+        $JobStorage = new JobStorage();
+        $Job = $JobStorage->get($id);
+
+        Viewer::render('Main:jobInfo', array('job'=>$Job));
+    }
+
+    public function saveAction()
     {
         $Job = new Job();
         $Request = new Request();
         $JobStorage = new JobStorage();
-        $HostStorage = new HostStorage();
-        $Generator = new Generator($HostStorage);
 
         $Request->processing($Job);
-        $JobStorage->saveJob($Job);
-        $Generator->generate($Job);
+        $JobStorage->save($Job);
 
-        Router::redirect('/job_list');
+        Router::redirect('/job_get/'.$Job->id);
     }
 }

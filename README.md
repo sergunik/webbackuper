@@ -5,10 +5,9 @@ PHP router based on [Macaw](https://github.com/NoahBuscher/Macaw).
 
 ### Install
 
-#install https://getcomposer.org/
-composer install
-chmod -R 777 cache config sh
-#apt-get install rsync
+1. _install https://getcomposer.org/_
+1. php composer.phar install
+1. chmod -R 777 cache config sh
 
 ### License
 

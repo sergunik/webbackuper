@@ -1,7 +1,7 @@
 <?php
-namespace Webbackuper\service;
+namespace webbackuper\service;
 
-use Webbackuper\entity\Host;
+use webbackuper\entity\Host;
 
 class HostStorage extends AbstractStorage
 {

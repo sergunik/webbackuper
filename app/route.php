@@ -1,26 +1,26 @@
 <?php
 
-\Webbackuper\service\Router::get('/', '\Webbackuper\controller\MainController@indexAction');
+\webbackuper\service\Router::get('/', '\webbackuper\controller\MainController@indexAction');
 
-\Webbackuper\service\Router::get('/(:alpha).css', function($style) {
+\webbackuper\service\Router::get('/(:alpha).css', function($style) {
     include DIR_CSS . $style . '.css';
 });
 
-\Webbackuper\service\Router::get('/(:alpha).js', function($script) {
+\webbackuper\service\Router::get('/(:alpha).js', function($script) {
     include DIR_JS . $script . '.js';
 });
 
-\Webbackuper\service\Router::get('/job_create', '\Webbackuper\controller\MainController@createAction');
-\Webbackuper\service\Router::post('/job_save', '\Webbackuper\controller\MainController@saveAction');
-\Webbackuper\service\Router::get('/job_list', '\Webbackuper\controller\MainController@listAction');
-\Webbackuper\service\Router::get('/job_get/(:num)', '\Webbackuper\controller\MainController@getAction');
+\webbackuper\service\Router::get    ('/job_create',     '\webbackuper\controller\JobController@createAction');
+\webbackuper\service\Router::post   ('/job_save',       '\webbackuper\controller\JobController@saveAction');
+\webbackuper\service\Router::get    ('/job_list',       '\webbackuper\controller\JobController@listAction');
+\webbackuper\service\Router::get    ('/job_get/(:num)', '\webbackuper\controller\JobController@getAction');
 
-\Webbackuper\service\Router::get('/job_get/(:num)/task_create/(:alpha)', '\Webbackuper\controller\TaskController@createAction');
-\Webbackuper\service\Router::post('/job_get/(:num)/task_save/(:alpha)', '\Webbackuper\controller\TaskController@saveAction');
-\Webbackuper\service\Router::get('/job_get/(:num)/task_list', '\Webbackuper\controller\TaskController@listAction');
+\webbackuper\service\Router::get('/job_get/(:num)/task_create/(:alpha)', '\webbackuper\controller\TaskController@createAction');
+\webbackuper\service\Router::post('/job_get/(:num)/task_save/(:alpha)', '\webbackuper\controller\TaskController@saveAction');
+\webbackuper\service\Router::get('/job_get/(:num)/task_list', '\webbackuper\controller\TaskController@listAction');
 
-\Webbackuper\service\Router::get('/host', '\Webbackuper\controller\HostController@indexAction');
-\Webbackuper\service\Router::post('/host_save', '\Webbackuper\controller\HostController@saveAction');
+\webbackuper\service\Router::get('/host', '\webbackuper\controller\HostController@indexAction');
+\webbackuper\service\Router::post('/host_save', '\webbackuper\controller\HostController@saveAction');
 
 
-\Webbackuper\service\Router::dispatch();
+\webbackuper\service\Router::dispatch();

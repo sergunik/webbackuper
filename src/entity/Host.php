@@ -1,5 +1,5 @@
 <?php
-namespace Webbackuper\entity;
+namespace webbackuper\entity;
 
 class Host extends AbstractEntity
 {

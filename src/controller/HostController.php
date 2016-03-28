@@ -1,11 +1,11 @@
 <?php
-namespace Webbackuper\controller;
+namespace webbackuper\controller;
 
-use Webbackuper\entity\Host;
-use Webbackuper\service\Request;
-use Webbackuper\service\HostStorage;
-use Webbackuper\service\Router;
-use Webbackuper\service\Viewer;
+use webbackuper\entity\Host;
+use webbackuper\service\Request;
+use webbackuper\service\HostStorage;
+use webbackuper\service\Router;
+use webbackuper\service\Viewer;
 
 class HostController
 {

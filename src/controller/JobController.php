@@ -2,37 +2,32 @@
 namespace webbackuper\controller;
 
 use webbackuper\entity\Job;
+use webbackuper\service\JobStorage;
 use webbackuper\service\Request;
 use webbackuper\service\Router;
-use webbackuper\service\JobStorage;
 use webbackuper\service\Viewer;
 
-class MainController
+class JobController
 {
-    public function indexAction()
-    {
-        Viewer::render('Main:index');
-    }
-
     public function createAction()
     {
-        Viewer::render('Main:jobCreate');
+        Viewer::render('Job:jobCreate');
     }
 
-    public function listAction()
-    {
-        $JobStorage = new JobStorage();
-        $jobs = $JobStorage->getListObjects(); //todo: need name of entity
-
-        Viewer::render('Main:jobList', array('jobs'=>$jobs));
-    }
-
+//    public function listAction()
+//    {
+//        $JobStorage = new JobStorage();
+//        $jobs = $JobStorage->getListObjects(); //todo: need name of entity
+//
+//        Viewer::render('Job:jobList', array('jobs'=>$jobs));
+//    }
+//
     public function getAction($id)
     {
         $JobStorage = new JobStorage();
-        $Job = $JobStorage->get($id);
+        $Job = $JobStorage->getById($id);
 
-        Viewer::render('Main:jobInfo', array('job'=>$Job));
+        Viewer::render('Job:jobInfo', array('job'=>$Job));
     }
 
     public function saveAction()

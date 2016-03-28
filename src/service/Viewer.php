@@ -1,5 +1,5 @@
 <?php
-namespace Webbackuper\service;
+namespace webbackuper\service;
 
 class Viewer {
     const DELIMITER = ':';

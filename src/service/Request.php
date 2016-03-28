@@ -1,5 +1,5 @@
 <?php
-namespace Webbackuper\service;
+namespace webbackuper\service;
 
 use webbackuper\entity\AbstractEntity;
 

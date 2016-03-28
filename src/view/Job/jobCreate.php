@@ -1,5 +1,5 @@
     <section>
-        <h1>Job create</h1>
+        <h1>Job create (new)</h1>
 
         <form action="/job_save" method="post">
             <article>

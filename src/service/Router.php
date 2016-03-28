@@ -1,6 +1,6 @@
 <?php
 
-namespace Webbackuper\service;
+namespace webbackuper\service;
 
 /**
  * @method static Route get(string $route, Callable $callback)

@@ -1,5 +1,5 @@
 {
-    "name": "Webbackuper/Webbackuper",
+    "name": "webbackuper/webbackuper",
     "description": "Web service for making backups from different environments.",
     "keywords": ["backup", "web interface", "PSR-4"],
     "type": "project",
@@ -17,7 +17,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Webbackuper\\": "src"
+            "webbackuper\\": "src"
         }
     },
     "minimum-stability": "dev"

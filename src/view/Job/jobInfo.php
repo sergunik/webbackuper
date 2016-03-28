@@ -1,5 +1,5 @@
     <section>
-        <h1>Job info</h1>
+        <h1>Job info (new)</h1>
 
         <pre>
 <?php print_r($job) ?>

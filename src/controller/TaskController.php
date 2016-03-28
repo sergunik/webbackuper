@@ -1,12 +1,12 @@
 <?php
-namespace Webbackuper\controller;
+namespace webbackuper\controller;
 
-use Webbackuper\entity\Job;
-use Webbackuper\service\Request;
-use Webbackuper\service\Router;
-use Webbackuper\service\JobStorage;
-use Webbackuper\service\TaskStorage;
-use Webbackuper\service\Viewer;
+use webbackuper\entity\Job;
+use webbackuper\service\Request;
+use webbackuper\service\Router;
+use webbackuper\service\JobStorage;
+use webbackuper\service\TaskStorage;
+use webbackuper\service\Viewer;
 
 class TaskController
 {
@@ -20,7 +20,7 @@ class TaskController
         $JobStorage = new JobStorage();
         $Job = $JobStorage->get($jobId);
 
-        $fullTaskName = 'Webbackuper\\task\\'.$taskName.'\\'.$taskName;
+        $fullTaskName = 'webbackuper\\task\\'.$taskName.'\\'.$taskName;
         $Task = new $fullTaskName();
 
         $fullTaskName .= 'Entity';
@@ -51,7 +51,7 @@ class TaskController
         $JobStorage = new JobStorage();
         $Job = $JobStorage->get($jobId);
 
-        $fullTaskName = 'Webbackuper\\task\\'.$taskName.'\\'.$taskName;
+        $fullTaskName = 'webbackuper\\task\\'.$taskName.'\\'.$taskName;
         $Task = new $fullTaskName();
 
         $fullTaskName .= 'Entity';

@@ -1,8 +1,8 @@
 <?php
-namespace Webbackuper\service;
+namespace webbackuper\service;
 
-use Webbackuper\entity\Job;
-use Webbackuper\service\HostStorage;
+use webbackuper\entity\Job;
+use webbackuper\service\HostStorage;
 
 class Generator
 {

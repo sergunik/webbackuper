@@ -1,5 +1,5 @@
 <?php
-namespace Webbackuper\task\gzip;
+namespace webbackuper\task\gzip;
 
 class gzip
 {

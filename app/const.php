@@ -22,4 +22,5 @@ define('DIR_IMG', DIR_WEB . 'img/');
 
 //New
 define('DIR_ROOT', __DIR__ . '/../');
-define('DIR_CONFIG_JOBS', DIR_ROOT . 'jobs/');
+define('DIR_VAR', DIR_ROOT . 'var/');
+define('DIR_CONFIG_JOBS', DIR_VAR . 'jobs/');

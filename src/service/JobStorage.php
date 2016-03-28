@@ -14,9 +14,14 @@ class JobStorage implements StorageInterface
         return DIR_CONFIG_JOBS;
     }
 
+    protected function _getFilename ($id)
+    {
+        return $id .'.'. self::EXTENSION;
+    }
+
     public function save(AbstractEntity $entity)
     {
-        $file = $entity->id . self::EXTENSION;
+        $file = $this->_getFilename($entity->id);
         $data = (array) json_encode($entity, JSON_PRETTY_PRINT);
 
         IO::write($this->_getFilePath(), $file, $data);
@@ -24,7 +29,7 @@ class JobStorage implements StorageInterface
 
     public function getById($id)
     {
-        $file = $id . self::EXTENSION;
+        $file = $this->_getFilename($id);
         $data = IO::read($this->_getFilePath(), $file);
 
         return new Job($data);
@@ -32,20 +37,17 @@ class JobStorage implements StorageInterface
 
     public function getAll()
     {
-        // TODO: Implement getAll() method.
-    }
+        $return = [];
 
-    public function getList()
-    {
-        // TODO: Implement getList() method.
-    }
+        foreach (new \DirectoryIterator($this->_getFilePath()) as $file) {
+            if ( $file->isFile() && self::EXTENSION == $file->getExtension() ) {
+                $filename = $file->getBasename('.'.self::EXTENSION);
+                $content = $this->getById($filename);
 
-//    protected function _getFilePath () {
-//        return DIR_CONFIG_JOBS;
-//    }
-//
-//    public function get($id) {
-//        $data = self::getData($id);
-//        return new Job($data);
-//    }
+                $return[$filename] = $content;
+            }
+        }
+
+        return $return;
+    }
 }

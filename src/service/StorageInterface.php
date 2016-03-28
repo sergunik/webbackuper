@@ -13,7 +13,5 @@ interface StorageInterface
 
     public function getAll();
 
-    public function getList();
-
     public function save(AbstractEntity $entity);
 }

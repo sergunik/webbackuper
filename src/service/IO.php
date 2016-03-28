@@ -27,7 +27,8 @@ class IO
         $dir .= (substr($dir, -1) == '/' ? '' : '/');
 
         if(!is_dir($dir)) {
-            mkdir($dir, 0777, true);
+            if(!mkdir($dir, 0777, true))
+                throw new \Exception('Have no permission to create dir "'. $dir .'".');
         }
 
         $filename = $dir . $file;

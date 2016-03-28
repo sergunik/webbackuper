@@ -14,14 +14,14 @@ class JobController
         Viewer::render('Job:jobCreate');
     }
 
-//    public function listAction()
-//    {
-//        $JobStorage = new JobStorage();
-//        $jobs = $JobStorage->getListObjects(); //todo: need name of entity
-//
-//        Viewer::render('Job:jobList', array('jobs'=>$jobs));
-//    }
-//
+    public function listAction()
+    {
+        $JobStorage = new JobStorage();
+        $jobs = $JobStorage->getAll();
+
+        Viewer::render('Job:jobList', array('jobs'=>$jobs));
+    }
+
     public function getAction($id)
     {
         $JobStorage = new JobStorage();

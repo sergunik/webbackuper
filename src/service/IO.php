@@ -18,8 +18,7 @@ class IO
         }
 
         //todo: exception if cant decode
-        $data = file_get_contents( $filename );
-        return json_decode( $data, true );
+        return file_get_contents( $filename );
     }
 
     static function write($dir, $file, $data)

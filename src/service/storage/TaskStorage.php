@@ -6,7 +6,7 @@ use webbackuper\service\TaskLoader;
 class TaskStorage extends AbstractStorage
 {
     protected function _getFilePath () {
-        return DIR_CONFIG_TASKS;
+        return DIR_VAR_TASKS;
     }
 
     public function getById($id)

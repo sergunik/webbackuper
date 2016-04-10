@@ -6,7 +6,7 @@ use webbackuper\entity\Job;
 class JobStorage extends AbstractStorage
 {
     protected function _getFilePath () {
-        return DIR_CONFIG_JOBS;
+        return DIR_VAR_JOBS;
     }
 
     public function getById($id)

@@ -26,12 +26,17 @@ abstract class AbstractStorage implements StorageInterface
     public function getById($id)
     {
         $file = $this->_getFilename($id);
-        return IO::read($this->_getFilePath(), $file);
+        $data = IO::read($this->_getFilePath(), $file);
+        return json_decode( $data, true );
     }
 
     public function getAll()
     {
         $return = [];
+
+        if(!is_dir($this->_getFilePath())) {
+            return $return;
+        }
 
         foreach (new \DirectoryIterator($this->_getFilePath()) as $file) {
             if ( $file->isFile() && self::EXTENSION == $file->getExtension() ) {

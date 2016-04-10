@@ -2,12 +2,14 @@
 namespace webbackuper\task\gzip;
 
 use webbackuper\entity\Job;
+use webbackuper\service\Generator;
 use webbackuper\service\Viewer;
 
 class gzip
 {
     const TASK_NAME = 'gzip';
-
+    const PATTERN_COMMAND = 'gzip -c %fileToArchiving% > %fileResult%';
+    
     /**
      * @var gzipEntity
      */
@@ -25,7 +27,19 @@ class gzip
 
     public function generate()
     {
-        //implement
+        $script = array();
+        $script[] = Generator::SHEBANG;
+        $script[] = '';
+        $script[] = $this->generateCommand(self::PATTERN_COMMAND);
+
+        return implode( PHP_EOL, $script );
+    }
+
+    private function generateCommand($pattern) {
+        $pattern = str_replace('%fileToArchiving%', $this->entity->fileToArchiving, $pattern);
+        $pattern = str_replace('%fileResult%', $this->entity->fileResult, $pattern);
+
+        return $pattern;
     }
 
     public function view()

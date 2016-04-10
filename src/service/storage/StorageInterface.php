@@ -1,12 +1,8 @@
 <?php
-namespace webbackuper\service;
+namespace webbackuper\service\storage;
 
 use webbackuper\entity\AbstractEntity;
 
-/**
- * User: Serhii Topolnytskyi
- * Date: 3/28/16
- */
 interface StorageInterface
 {
     public function getById($id);

@@ -1,18 +1,14 @@
 <?php
-namespace webbackuper\service;
+namespace webbackuper\service\storage;
 
-use webbackuper\entity\Job;
-use webbackuper\service\IO;
 use webbackuper\entity\AbstractEntity;
-use webbackuper\service\StorageInterface;
+use webbackuper\service\IO;
 
-class JobStorage implements StorageInterface
+abstract class AbstractStorage implements StorageInterface
 {
     const EXTENSION = 'json';
 
-    protected function _getFilePath () {
-        return DIR_CONFIG_JOBS;
-    }
+    abstract protected function _getFilePath ();
 
     protected function _getFilename ($id)
     {
@@ -30,9 +26,7 @@ class JobStorage implements StorageInterface
     public function getById($id)
     {
         $file = $this->_getFilename($id);
-        $data = IO::read($this->_getFilePath(), $file);
-
-        return new Job($data);
+        return IO::read($this->_getFilePath(), $file);
     }
 
     public function getAll()
@@ -48,6 +42,7 @@ class JobStorage implements StorageInterface
             }
         }
 
+        krsort($return);
         return $return;
     }
 }

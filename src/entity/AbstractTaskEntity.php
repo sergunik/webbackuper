@@ -1,7 +1,7 @@
 <?php
 namespace webbackuper\entity;
 
-abstract class AbstractTask extends AbstractEntity
+abstract class AbstractTaskEntity extends AbstractEntity
 {
     public $name;
     public $type;

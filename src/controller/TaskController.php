@@ -1,68 +1,66 @@
 <?php
 namespace webbackuper\controller;
 
-use webbackuper\entity\Job;
 use webbackuper\service\Request;
 use webbackuper\service\Router;
-use webbackuper\service\JobStorage;
-use webbackuper\service\TaskStorage;
+use webbackuper\service\storage\JobStorage;
+use webbackuper\service\TaskLoader;
+use webbackuper\service\storage\TaskStorage;
 use webbackuper\service\Viewer;
 
 class TaskController
 {
-    public function indexAction()
-    {
-        Viewer::render('Task:index');
-    }
-
     public function createAction($jobId, $taskName)
     {
         $JobStorage = new JobStorage();
-        $Job = $JobStorage->get($jobId);
+        $Job = $JobStorage->getById($jobId);
 
-        $fullTaskName = 'webbackuper\\task\\'.$taskName.'\\'.$taskName;
-        $Task = new $fullTaskName();
-
-        $fullTaskName .= 'Entity';
-        $TaskEntity = new $fullTaskName();
-
-
-        Viewer::render($taskName, ['job'=>$Job, 'entity'=>$TaskEntity]);
+        $Task = TaskLoader::get($taskName);
+        $Task->setJob($Job);
+        $Task->view();
     }
 
     public function listAction($jobId)
     {
-        $TaskStorage = new TaskStorage($jobId);
-        $tasks = $TaskStorage->getListObjects();
+        $JobStorage = new JobStorage();
+        $Job = $JobStorage->getById($jobId);
+        $taskListIds = $Job->tasks;
+
+        $TaskStorage = new TaskStorage();
+
+        $tasks = array();
+        foreach ($taskListIds as $taskId)
+        {
+            $tasks[] = $TaskStorage->getById($taskId);
+        }
 
         Viewer::render('Task:taskList', array('tasks'=>$tasks));
     }
 
-//    public function getJobAction($id)
-//    {
-//        $JobStorage = new JobStorage();
-//        $Job = $JobStorage->get($id);
-//
-//        Viewer::render('Main:jobInfo', array('job'=>$Job));
-//    }
-//
+    public function getAction($id)
+    {
+        $TaskStorage = new TaskStorage();
+        $Task = $TaskStorage->getById($id);
+
+        Viewer::render('Task:taskInfo', array('task'=>$Task));
+    }
+
     public function saveAction($jobId, $taskName)
     {
-        $JobStorage = new JobStorage();
-        $Job = $JobStorage->get($jobId);
-
-        $fullTaskName = 'webbackuper\\task\\'.$taskName.'\\'.$taskName;
-        $Task = new $fullTaskName();
-
-        $fullTaskName .= 'Entity';
-        $TaskEntity = new $fullTaskName();
+        $Task = TaskLoader::get($taskName);
+        $TaskEntity = $Task->getEntity();
 
         $Request = new Request();
         $Request->processing($TaskEntity);
 
-        $TaskStorage = new TaskStorage($jobId);
+        $TaskStorage = new TaskStorage();
         $TaskStorage->save($TaskEntity);
 
-        Router::redirect('/job_get/'.$jobId.'/task_create/'.$taskName);
+        $JobStorage = new JobStorage();
+        $Job = $JobStorage->getById($jobId);
+        $Job->tasks[] = $TaskEntity->id;
+        $JobStorage->save($Job);
+
+        Router::redirect('/task_get/'.$TaskEntity->id);
     }
 }

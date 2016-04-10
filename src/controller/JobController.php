@@ -2,7 +2,7 @@
 namespace webbackuper\controller;
 
 use webbackuper\entity\Job;
-use webbackuper\service\JobStorage;
+use webbackuper\service\storage\JobStorage;
 use webbackuper\service\Request;
 use webbackuper\service\Router;
 use webbackuper\service\Viewer;

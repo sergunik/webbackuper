@@ -1,1 +1,0 @@
-<h1>Empty task view</h1>

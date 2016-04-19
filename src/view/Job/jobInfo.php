@@ -8,4 +8,5 @@
 
         <p><a href="/job_get/<?php echo $job->id ?>/task_list">task_list</a></p>
         <p><a href="/job_get/<?php echo $job->id ?>/task_create/gzip">task_create/gzip</a></p>
+        <p><a href="/job_get/<?php echo $job->id ?>/build">Build</a></p>
     </section>

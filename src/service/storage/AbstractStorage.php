@@ -18,7 +18,7 @@ abstract class AbstractStorage implements StorageInterface
     public function save(AbstractEntity $entity)
     {
         $file = $this->_getFilename($entity->id);
-        $data = (array) json_encode($entity, JSON_PRETTY_PRINT);
+        $data = json_encode($entity, JSON_PRETTY_PRINT);
 
         IO::write($this->_getFilePath(), $file, $data);
     }

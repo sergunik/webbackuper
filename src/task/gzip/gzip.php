@@ -2,7 +2,7 @@
 namespace webbackuper\task\gzip;
 
 use webbackuper\entity\Job;
-use webbackuper\service\Generator;
+use webbackuper\service\storage\TaskStorage;
 use webbackuper\service\Viewer;
 
 class gzip
@@ -20,16 +20,19 @@ class gzip
      */
     private $job;
 
-    function __construct()
+    function __construct($id = null)
     {
-        $this->entity = $this->getEntity();
+        if(is_null($id)) {
+            $this->entity = new gzipEntity();
+        } else {
+            $TaskStorage = new TaskStorage();
+            $this->entity = $TaskStorage->getById($id);
+        }
     }
 
     public function generate()
     {
         $script = array();
-        $script[] = Generator::SHEBANG;
-        $script[] = '';
         $script[] = $this->generateCommand(self::PATTERN_COMMAND);
 
         return implode( PHP_EOL, $script );

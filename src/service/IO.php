@@ -17,7 +17,6 @@ class IO
             throw new \Exception('File "' . $filename . '" does not exist.');
         }
 
-        //todo: exception if cant decode
         return file_get_contents( $filename );
     }
 
@@ -40,6 +39,6 @@ class IO
 
         chmod($filename, 0777);
 
-        return true;
+        return $result;
     }
 }

@@ -1,19 +1,27 @@
 <?php
 namespace webbackuper\service\storage;
 
-use webbackuper\service\TaskLoader;
-
 class TaskStorage extends AbstractStorage
 {
+    //ToDo: make all static methods
     protected function _getFilePath () {
         return DIR_VAR_TASKS;
+    }
+
+    public function getNewEntity($type)
+    {
+        //ToDo: use constant
+        $fullEntityName = 'webbackuper\\task\\'.$type.'\\'.$type.'Entity';
+        return new $fullEntityName();
     }
 
     public function getById($id)
     {
         $data = parent::getById($id);
 
-        $Task = TaskLoader::get($data['type']);
-        return $Task->getEntity($data);
+        $entity = $this->getNewEntity($data['type']);
+        $entity->__construct($data);
+
+        return $entity;
     }
 }

@@ -15,6 +15,7 @@
 \webbackuper\service\Router::post   ('/job_save',       '\webbackuper\controller\JobController@saveAction');
 \webbackuper\service\Router::get    ('/job_list',       '\webbackuper\controller\JobController@listAction');
 \webbackuper\service\Router::get    ('/job_get/(:num)', '\webbackuper\controller\JobController@getAction');
+\webbackuper\service\Router::get    ('/job_get/(:num)/build', '\webbackuper\controller\JobController@buildAction');
 
 \webbackuper\service\Router::get    ('/job_get/(:num)/task_create/(:alpha)', '\webbackuper\controller\TaskController@createAction');
 \webbackuper\service\Router::post   ('/job_get/(:num)/task_save/(:alpha)', '\webbackuper\controller\TaskController@saveAction');

@@ -2,6 +2,7 @@
 namespace webbackuper\controller;
 
 use webbackuper\entity\Job;
+use webbackuper\service\Generator;
 use webbackuper\service\storage\JobStorage;
 use webbackuper\service\Request;
 use webbackuper\service\Router;
@@ -40,5 +41,10 @@ class JobController
         $JobStorage->save($Job);
 
         Router::redirect('/job_get/'.$Job->id);
+    }
+
+    public function buildAction($id)
+    {
+        Generator::build($id);
     }
 }

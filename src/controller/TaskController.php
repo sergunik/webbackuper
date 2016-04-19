@@ -47,13 +47,12 @@ class TaskController
 
     public function saveAction($jobId, $taskName)
     {
-        $Task = TaskLoader::get($taskName);
-        $TaskEntity = $Task->getEntity();
+        $TaskStorage = new TaskStorage();
+        $TaskEntity = $TaskStorage->getNewEntity($taskName);
 
         $Request = new Request();
         $Request->processing($TaskEntity);
 
-        $TaskStorage = new TaskStorage();
         $TaskStorage->save($TaskEntity);
 
         $JobStorage = new JobStorage();

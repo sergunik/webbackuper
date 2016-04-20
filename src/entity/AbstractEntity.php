@@ -4,6 +4,8 @@ namespace webbackuper\entity;
 abstract class AbstractEntity
 {
     public $id = null;
+    public $name = null;
+    public $type = null;
 
     /**
      * @param null $data

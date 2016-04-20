@@ -3,25 +3,29 @@ namespace webbackuper\service\storage;
 
 class TaskStorage extends AbstractStorage
 {
-    //ToDo: make all static methods
-    protected function _getFilePath () {
-        return DIR_VAR_TASKS;
-    }
+    const EXTENSION = 'json';
+    const DIR_VAR = DIR_VAR_TASKS;
 
-    public function getNewEntity($type)
+    public static function save($id, $content)
     {
-        //ToDo: use constant
-        $fullEntityName = 'webbackuper\\task\\'.$type.'\\'.$type.'Entity';
-        return new $fullEntityName();
+        $content = json_encode($content, JSON_PRETTY_PRINT);
+        return parent::save($id, $content);
     }
 
-    public function getById($id)
+    public static function getById($id)
     {
         $data = parent::getById($id);
+        $data = json_decode( $data, true );
 
-        $entity = $this->getNewEntity($data['type']);
+        $entity = self::getNewEntity($data['type']);
         $entity->__construct($data);
 
         return $entity;
+    }
+
+    public static function getNewEntity($type)
+    {
+        $fullEntityName = str_replace('%type%', $type, TASK_NAMESPACE);
+        return new $fullEntityName();
     }
 }

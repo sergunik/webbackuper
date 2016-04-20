@@ -1,7 +1,7 @@
 <?php
 namespace webbackuper\entity;
 
-class Job extends AbstractEntity
+class JobEntity extends AbstractEntity
 {
     public $name;
     public $tasks = array();

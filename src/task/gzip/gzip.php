@@ -1,13 +1,11 @@
 <?php
 namespace webbackuper\task\gzip;
 
-use webbackuper\entity\Job;
 use webbackuper\service\storage\TaskStorage;
-use webbackuper\service\Viewer;
 
 class gzip
 {
-    const TASK_NAME = 'gzip';
+//    const TASK_NAME = 'gzip';
     const PATTERN_COMMAND = 'gzip -c %fileToArchiving% > %fileResult%';
     
     /**
@@ -15,18 +13,12 @@ class gzip
      */
     private $entity;
 
-    /**
-     * @var Job
-     */
-    private $job;
-
     function __construct($id = null)
     {
         if(is_null($id)) {
             $this->entity = new gzipEntity();
         } else {
-            $TaskStorage = new TaskStorage();
-            $this->entity = $TaskStorage->getById($id);
+            $this->entity = TaskStorage::getById($id);
         }
     }
 
@@ -44,30 +36,4 @@ class gzip
 
         return $pattern;
     }
-
-    public function view()
-    {
-        Viewer::render(self::TASK_NAME,
-            array(
-                'job'=>$this->job,
-                'entity'=>$this->entity,
-            )
-        );
-    }
-
-    public function save()
-    {
-
-    }
-
-    public function getEntity($data = null)
-    {
-        return new gzipEntity($data);
-    }
-
-    public function setJob(Job $job)
-    {
-        $this->job = $job;
-    }
-
 }

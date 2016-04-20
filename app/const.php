@@ -17,4 +17,4 @@ define('DIR_VAR_JOBS', DIR_VAR . 'jobs/');
 define('DIR_VAR_TASKS', DIR_VAR . 'tasks/');
 define('DIR_VAR_SH', DIR_VAR . 'sh/');
 
-//define('TASK_NAMESPACE', '');
+define('TASK_NAMESPACE', 'webbackuper\\task\\%type%\\%type%Entity');

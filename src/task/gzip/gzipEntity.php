@@ -1,9 +1,9 @@
 <?php
 namespace webbackuper\task\gzip;
 
-use webbackuper\entity\AbstractTaskEntity;
+use webbackuper\entity\AbstractEntity;
 
-class gzipEntity extends AbstractTaskEntity
+class gzipEntity extends AbstractEntity
 {
     public $name = 'GZIP task';
     public $type = 'gzip';

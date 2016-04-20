@@ -1,53 +1,47 @@
 <?php
 namespace webbackuper\service\storage;
 
-use webbackuper\entity\AbstractEntity;
 use webbackuper\service\IO;
 
-abstract class AbstractStorage implements StorageInterface
+abstract class AbstractStorage
 {
-    const EXTENSION = 'json';
+    const EXTENSION = null;
+    const DIR_VAR = null;
 
-    abstract protected function _getFilePath ();
-
-    protected function _getFilename ($id)
+    public static function getFileName ($id)
     {
-        return $id .'.'. self::EXTENSION;
+        return $id .'.'. static::EXTENSION;
     }
 
-    public function save(AbstractEntity $entity)
+    public static function save($id, $content)
     {
-        $file = $this->_getFilename($entity->id);
-        $data = json_encode($entity, JSON_PRETTY_PRINT);
+        $filename = self::getFileName($id);
+        return IO::write(static::DIR_VAR, $filename, $content);
 
-        IO::write($this->_getFilePath(), $file, $data);
     }
 
-    public function getById($id)
+    public static function getAll()
     {
-        $file = $this->_getFilename($id);
-        $data = IO::read($this->_getFilePath(), $file);
-        return json_decode( $data, true );
-    }
+        $return = array();
 
-    public function getAll()
-    {
-        $return = [];
+        if(!is_dir(static::DIR_VAR)) return $return;
 
-        if(!is_dir($this->_getFilePath())) {
-            return $return;
-        }
+        foreach (new \DirectoryIterator(static::DIR_VAR) as $file) {
+            if ( $file->isFile() && static::EXTENSION == $file->getExtension() ) {
+                $id = $file->getBasename('.'.static::EXTENSION);
+                $content = static::getById($id);
 
-        foreach (new \DirectoryIterator($this->_getFilePath()) as $file) {
-            if ( $file->isFile() && self::EXTENSION == $file->getExtension() ) {
-                $filename = $file->getBasename('.'.self::EXTENSION);
-                $content = $this->getById($filename);
-
-                $return[$filename] = $content;
+                $return[$id] = $content;
             }
         }
 
         krsort($return);
         return $return;
+    }
+
+    public static function getById($id)
+    {
+        $filename = self::getFileName($id);
+        return IO::read(static::DIR_VAR, $filename);
     }
 }

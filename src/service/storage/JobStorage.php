@@ -1,19 +1,29 @@
 <?php
 namespace webbackuper\service\storage;
 
-use webbackuper\entity\Job;
+use webbackuper\entity\JobEntity;
 
 class JobStorage extends AbstractStorage
 {
-    protected function _getFilePath ()
+    const EXTENSION = 'json';
+    const DIR_VAR = DIR_VAR_JOBS;
+
+    public static function save($id, $content)
     {
-        return DIR_VAR_JOBS;
+        $content = json_encode($content, JSON_PRETTY_PRINT);
+        return parent::save($id, $content);
     }
 
-    public function getById($id)
+    public static function getById($id)
     {
         $data = parent::getById($id);
+        $data = json_decode( $data, true );
 
-        return new Job($data);
+        return new JobEntity($data);
+    }
+
+    public static function getNewEntity()
+    {
+        return new JobEntity();
     }
 }

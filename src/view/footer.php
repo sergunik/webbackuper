@@ -1,5 +1,6 @@
+    <div class="clear"></div>
+
     <footer>
-        <hr>
         Footer - Copyright 2015
     </footer>
 

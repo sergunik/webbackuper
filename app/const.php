@@ -1,7 +1,8 @@
 <?php
 
-//NAMES
+//GENERAL
 define('PROJECT_NAME', 'WebBackUper');
+define('PROJECT_VERSION', 'v0.1');
 
 //DIRECTORIES
 define('DIR_VIEW', __DIR__ . '/../src/view/');
